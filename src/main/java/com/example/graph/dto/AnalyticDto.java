@@ -1,12 +1,13 @@
 package com.example.graph.dto;
 
-import com.querydsl.core.annotations.QueryProjection;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Getter
+@RequiredArgsConstructor
 public class AnalyticDto {
 
     private final Long id; // 고유 식별자
@@ -20,22 +21,4 @@ public class AnalyticDto {
     private final int subscribers; // 구독자 수
     private final int impressions; // 노출 수
     private final BigDecimal impressionsClickRate; // 노출 클릭률
-
-    @QueryProjection
-    public AnalyticDto(Long id, String contentId, String videoTitle,
-                       LocalDateTime publishTime, String videoLength, int validViews,
-                       int views, BigDecimal watchTimeHours, int subscribers,
-                       int impressions, BigDecimal impressionsClickRate) {
-        this.id = id;
-        this.contentId = contentId;
-        this.videoTitle = videoTitle;
-        this.publishTime = publishTime;
-        this.videoLength = videoLength;
-        this.validViews = validViews;
-        this.views = views;
-        this.watchTimeHours = watchTimeHours;
-        this.subscribers = subscribers;
-        this.impressions = impressions;
-        this.impressionsClickRate = impressionsClickRate;
-    }
 }
