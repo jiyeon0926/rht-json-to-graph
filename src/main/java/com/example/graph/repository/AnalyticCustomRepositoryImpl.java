@@ -8,7 +8,6 @@ import com.querydsl.core.group.GroupBy;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -17,7 +16,7 @@ public class AnalyticCustomRepositoryImpl implements AnalyticCustomRepository {
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public List<AnalyticResDto> findTotalsByChannelAndCollectedAt(String channelName, LocalDate collectedAt) {
+    public List<AnalyticResDto> findTotalsByChannelAndCollectedAt() {
         QAnalytic analytic = QAnalytic.analytic;
 
         return jpaQueryFactory
