@@ -15,7 +15,7 @@ public class AnalyticService {
     private final AnalyticRepository analyticRepository;
 
     @Transactional(readOnly = true)
-    public List<AnalyticResDto> findTotalsByChannelAndCollectedAt() {
-        return analyticRepository.findTotalsByChannelAndCollectedAt();
+    public List<AnalyticResDto> findTotalsWithVideos() {
+        return analyticRepository.findTotalsWithVideos();
     }
 }
