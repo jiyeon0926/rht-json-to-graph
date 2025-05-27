@@ -91,7 +91,7 @@ public class AnalyticCustomRepositoryImpl implements AnalyticCustomRepository {
         Map<String, List<AnalyticDto>> groupedDetails = details.stream()
                 .collect(Collectors.groupingBy(detail -> detail.getCollectedAt().toString() + "|" + detail.getChannelName()));
 
-        // AnalyticResDto의 List 타입 videos 필드에 데이터 넣기
+        // groupedDetails 맵에서 수집일 및 채널명을 키로 사용하여, 해당 상세 데이터를 AnalyticResDto의 videos 필드에 설정
         totals.forEach(total -> {
             String key = total.getCollectedAt().toString() + "|" + total.getChannelName();
             total.setVideos(groupedDetails.getOrDefault(key, Collections.emptyList()));
