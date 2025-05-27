@@ -19,8 +19,8 @@ public class AnalyticController {
     private final AnalyticService analyticService;
 
     @GetMapping
-    public ResponseEntity<List<AnalyticResDto>> getAnalytics() {
-        List<AnalyticResDto> analytics = analyticService.getAnalytics();
+    public ResponseEntity<List<AnalyticResDto>> findTotalsByChannelAndCollectedAt() {
+        List<AnalyticResDto> analytics = analyticService.findTotalsByChannelAndCollectedAt();
 
         return new ResponseEntity<>(analytics, HttpStatus.OK);
     }
