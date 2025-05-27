@@ -2,6 +2,7 @@ package com.example.graph.dto;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -17,5 +18,7 @@ public class AnalyticResDto {
     private final int totalViews; // 총 조회수
     private final int totalSubscribers; // 신규 구독자 수의 누적 합계 (!= 채널 구독자 수)
     private final BigDecimal totalWatchTimeHours; // 총 시청 시간
-    private final List<AnalyticDto> videos;
+
+    @Setter
+    private List<AnalyticDto> videos;
 }

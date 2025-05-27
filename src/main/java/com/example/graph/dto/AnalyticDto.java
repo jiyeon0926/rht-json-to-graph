@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -11,6 +12,8 @@ import java.time.LocalDateTime;
 public class AnalyticDto {
 
     private final Long id; // 고유 식별자
+    private final String channelName; // 채널명
+    private final LocalDate collectedAt; // 수집일
     private final String contentId; // 영상 아이디
     private final String videoTitle; // 영상 제목
     private final LocalDateTime publishTime; // 영상 게시일
