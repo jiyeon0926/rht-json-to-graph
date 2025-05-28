@@ -20,5 +20,5 @@ public class AnalyticTotalsResDto {
     private final BigDecimal totalWatchTimeHours; // 총 시청 시간
 
     @Setter
-    private List<AnalyticDto> videos;
+    private List<AnalyticDetailDto> videos;
 }

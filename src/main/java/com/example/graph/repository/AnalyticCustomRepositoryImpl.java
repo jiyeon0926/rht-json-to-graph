@@ -1,6 +1,6 @@
 package com.example.graph.repository;
 
-import com.example.graph.dto.AnalyticDto;
+import com.example.graph.dto.AnalyticDetailDto;
 import com.example.graph.dto.AnalyticTotalsResDto;
 import com.example.graph.entity.QAnalytic;
 import com.querydsl.core.types.Projections;
@@ -43,12 +43,12 @@ public class AnalyticCustomRepositoryImpl implements AnalyticCustomRepository {
 
     // 수집일과 채널명에 따른 영상 상세 데이터를 조회
     @Override
-    public List<AnalyticDto> findDetailsByCollectedAtAndChannel(Set<LocalDate> colelctedAtSet, Set<String> channelNameSet) {
+    public List<AnalyticDetailDto> findDetailsByCollectedAtAndChannel(Set<LocalDate> colelctedAtSet, Set<String> channelNameSet) {
         QAnalytic analytic = QAnalytic.analytic;
 
         return jpaQueryFactory
                 .select(Projections.constructor(
-                        AnalyticDto.class,
+                        AnalyticDetailDto.class,
                         analytic.id,
                         analytic.channelName,
                         analytic.collectedAt,
@@ -72,6 +72,7 @@ public class AnalyticCustomRepositoryImpl implements AnalyticCustomRepository {
                 .fetch();
     }
 
+    // 집계 DTO의 List 필드에 영상 상세 데이터를 넣는 메서드
     @Override
     public List<AnalyticTotalsResDto> findTotalsWithVideos() {
         List<AnalyticTotalsResDto> totals = findTotalsByCollectedAtAndChannel();
@@ -85,10 +86,10 @@ public class AnalyticCustomRepositoryImpl implements AnalyticCustomRepository {
                 .map(AnalyticTotalsResDto::getChannelName)
                 .collect(Collectors.toSet());
 
-        List<AnalyticDto> details = findDetailsByCollectedAtAndChannel(colelctedAtSet, channelNameSet);
+        List<AnalyticDetailDto> details = findDetailsByCollectedAtAndChannel(colelctedAtSet, channelNameSet);
 
         // 수집일과 채널명으로 묶기 위함용
-        Map<String, List<AnalyticDto>> groupedDetails = details.stream()
+        Map<String, List<AnalyticDetailDto>> groupedDetails = details.stream()
                 .collect(Collectors.groupingBy(detail -> detail.getCollectedAt().toString() + "|" + detail.getChannelName()));
 
         // groupedDetails 맵에서 수집일 및 채널명을 키로 사용하여, 해당 상세 데이터를 AnalyticResDto의 videos 필드에 설정
