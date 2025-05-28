@@ -10,4 +10,4 @@
 - 채널에 대한 영상 조회
 
 # 🧩 설계 및 내용
-[👉 Notion 참고](https://www.notion.so/JSON-API-1ffe22e7e41380ac8b35cdf7e22f74e5)
+각 기능에 대한 조회 API 내용을 [Notion](https://www.notion.so/JSON-API-1ffe22e7e41380ac8b35cdf7e22f74e5)에 정리
