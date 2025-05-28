@@ -1,5 +1,6 @@
 package com.example.graph.service;
 
+import com.example.graph.dto.AnalyticSimpleResDto;
 import com.example.graph.dto.AnalyticTotalsResDto;
 import com.example.graph.repository.AnalyticRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,5 +18,10 @@ public class AnalyticService {
     @Transactional(readOnly = true)
     public List<AnalyticTotalsResDto> findTotalsWithVideos() {
         return analyticRepository.findTotalsWithVideos();
+    }
+
+    @Transactional(readOnly = true)
+    public List<AnalyticSimpleResDto> findByCollectedAtAndChannel() {
+        return analyticRepository.findByCollectedAtAndChannel();
     }
 }

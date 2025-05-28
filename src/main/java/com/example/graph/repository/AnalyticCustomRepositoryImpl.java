@@ -1,8 +1,11 @@
 package com.example.graph.repository;
 
 import com.example.graph.dto.AnalyticDetailDto;
+import com.example.graph.dto.AnalyticDto;
+import com.example.graph.dto.AnalyticSimpleResDto;
 import com.example.graph.dto.AnalyticTotalsResDto;
 import com.example.graph.entity.QAnalytic;
+import com.querydsl.core.group.GroupBy;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -99,5 +102,43 @@ public class AnalyticCustomRepositoryImpl implements AnalyticCustomRepository {
         });
 
         return totals;
+    }
+
+    // 각 채널에 대한 영상 상세 조회
+    @Override
+    public List<AnalyticSimpleResDto> findByCollectedAtAndChannel() {
+        QAnalytic analytic = QAnalytic.analytic;
+
+        return jpaQueryFactory
+                .selectFrom(analytic)
+                .orderBy(analytic.collectedAt.asc(), analytic.channelName.asc(), analytic.id.asc())
+                .transform(
+                        GroupBy.groupBy(
+                                        analytic.collectedAt, analytic.channelName, analytic.id,
+                                        analytic.contentId, analytic.videoTitle, analytic.publishTime,
+                                        analytic.videoLength, analytic.validViews, analytic.views,
+                                        analytic.watchTimeHours, analytic.subscribers, analytic.impressions,
+                                        analytic.impressionClickRate
+                                )
+                                .list(Projections.constructor(
+                                        AnalyticSimpleResDto.class,
+                                        analytic.channelName,
+                                        analytic.collectedAt,
+                                        GroupBy.list(Projections.constructor(
+                                                AnalyticDto.class,
+                                                analytic.id,
+                                                analytic.contentId,
+                                                analytic.videoTitle,
+                                                analytic.publishTime,
+                                                analytic.videoLength,
+                                                analytic.validViews.intValue(),
+                                                analytic.views.intValue(),
+                                                analytic.watchTimeHours.coalesce(BigDecimal.ZERO),
+                                                analytic.subscribers.intValue(),
+                                                analytic.impressions.intValue(),
+                                                analytic.impressionClickRate.coalesce(BigDecimal.ZERO)
+                                        ))
+                                ))
+                );
     }
 }
