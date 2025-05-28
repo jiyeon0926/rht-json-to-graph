@@ -1,8 +1,11 @@
 package com.example.graph.repository;
 
+import com.example.graph.dto.AnalyticDetailDto;
 import com.example.graph.dto.AnalyticDto;
-import com.example.graph.dto.AnalyticResDto;
+import com.example.graph.dto.AnalyticSimpleResDto;
+import com.example.graph.dto.AnalyticTotalsResDto;
 import com.example.graph.entity.QAnalytic;
+import com.querydsl.core.group.GroupBy;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -22,12 +25,12 @@ public class AnalyticCustomRepositoryImpl implements AnalyticCustomRepository {
 
     // 수집일과 채널명에 따른 집계 데이터 조회
     @Override
-    public List<AnalyticResDto> findTotalsByCollectedAtAndChannel() {
+    public List<AnalyticTotalsResDto> findTotalsByCollectedAtAndChannel() {
         QAnalytic analytic = QAnalytic.analytic;
 
         return jpaQueryFactory
                 .select(Projections.constructor(
-                        AnalyticResDto.class,
+                        AnalyticTotalsResDto.class,
                         analytic.channelName,
                         analytic.collectedAt,
                         analytic.validViews.sum().intValue(),
@@ -43,12 +46,12 @@ public class AnalyticCustomRepositoryImpl implements AnalyticCustomRepository {
 
     // 수집일과 채널명에 따른 영상 상세 데이터를 조회
     @Override
-    public List<AnalyticDto> findDetailsByCollectedAtAndChannel(Set<LocalDate> colelctedAtSet, Set<String> channelNameSet) {
+    public List<AnalyticDetailDto> findDetailsByCollectedAtAndChannel(Set<LocalDate> colelctedAtSet, Set<String> channelNameSet) {
         QAnalytic analytic = QAnalytic.analytic;
 
         return jpaQueryFactory
                 .select(Projections.constructor(
-                        AnalyticDto.class,
+                        AnalyticDetailDto.class,
                         analytic.id,
                         analytic.channelName,
                         analytic.collectedAt,
@@ -72,23 +75,24 @@ public class AnalyticCustomRepositoryImpl implements AnalyticCustomRepository {
                 .fetch();
     }
 
+    // 집계 DTO의 List 필드에 영상 상세 데이터를 넣는 메서드
     @Override
-    public List<AnalyticResDto> findTotalsWithVideos() {
-        List<AnalyticResDto> totals = findTotalsByCollectedAtAndChannel();
+    public List<AnalyticTotalsResDto> findTotalsWithVideos() {
+        List<AnalyticTotalsResDto> totals = findTotalsByCollectedAtAndChannel();
 
         // 여러 수집일이 아닌 특정 수집일 하나만 필요하기 때문에 List가 아닌 Set 사용
         Set<LocalDate> colelctedAtSet = totals.stream()
-                .map(AnalyticResDto::getCollectedAt)
+                .map(AnalyticTotalsResDto::getCollectedAt)
                 .collect(Collectors.toSet());
 
         Set<String> channelNameSet = totals.stream()
-                .map(AnalyticResDto::getChannelName)
+                .map(AnalyticTotalsResDto::getChannelName)
                 .collect(Collectors.toSet());
 
-        List<AnalyticDto> details = findDetailsByCollectedAtAndChannel(colelctedAtSet, channelNameSet);
+        List<AnalyticDetailDto> details = findDetailsByCollectedAtAndChannel(colelctedAtSet, channelNameSet);
 
         // 수집일과 채널명으로 묶기 위함용
-        Map<String, List<AnalyticDto>> groupedDetails = details.stream()
+        Map<String, List<AnalyticDetailDto>> groupedDetails = details.stream()
                 .collect(Collectors.groupingBy(detail -> detail.getCollectedAt().toString() + "|" + detail.getChannelName()));
 
         // groupedDetails 맵에서 수집일 및 채널명을 키로 사용하여, 해당 상세 데이터를 AnalyticResDto의 videos 필드에 설정
@@ -98,5 +102,43 @@ public class AnalyticCustomRepositoryImpl implements AnalyticCustomRepository {
         });
 
         return totals;
+    }
+
+    // 각 채널에 대한 영상 상세 조회
+    @Override
+    public List<AnalyticSimpleResDto> findByCollectedAtAndChannel() {
+        QAnalytic analytic = QAnalytic.analytic;
+
+        return jpaQueryFactory
+                .selectFrom(analytic)
+                .orderBy(analytic.collectedAt.asc(), analytic.channelName.asc(), analytic.id.asc())
+                .transform(
+                        GroupBy.groupBy(
+                                        analytic.collectedAt, analytic.channelName, analytic.id,
+                                        analytic.contentId, analytic.videoTitle, analytic.publishTime,
+                                        analytic.videoLength, analytic.validViews, analytic.views,
+                                        analytic.watchTimeHours, analytic.subscribers, analytic.impressions,
+                                        analytic.impressionClickRate
+                                )
+                                .list(Projections.constructor(
+                                        AnalyticSimpleResDto.class,
+                                        analytic.channelName,
+                                        analytic.collectedAt,
+                                        GroupBy.list(Projections.constructor(
+                                                AnalyticDto.class,
+                                                analytic.id,
+                                                analytic.contentId,
+                                                analytic.videoTitle,
+                                                analytic.publishTime,
+                                                analytic.videoLength,
+                                                analytic.validViews.intValue(),
+                                                analytic.views.intValue(),
+                                                analytic.watchTimeHours.coalesce(BigDecimal.ZERO),
+                                                analytic.subscribers.intValue(),
+                                                analytic.impressions.intValue(),
+                                                analytic.impressionClickRate.coalesce(BigDecimal.ZERO)
+                                        ))
+                                ))
+                );
     }
 }

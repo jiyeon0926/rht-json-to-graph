@@ -10,7 +10,7 @@ import java.util.List;
 
 @Getter
 @RequiredArgsConstructor
-public class AnalyticResDto {
+public class AnalyticTotalsResDto {
 
     private final String channelName; // 채널명
     private final LocalDate collectedAt; // 수집일
@@ -20,5 +20,5 @@ public class AnalyticResDto {
     private final BigDecimal totalWatchTimeHours; // 총 시청 시간
 
     @Setter
-    private List<AnalyticDto> videos;
+    private List<AnalyticDetailDto> videos;
 }

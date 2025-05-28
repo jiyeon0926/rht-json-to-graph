@@ -1,6 +1,7 @@
 package com.example.graph.service;
 
-import com.example.graph.dto.AnalyticResDto;
+import com.example.graph.dto.AnalyticSimpleResDto;
+import com.example.graph.dto.AnalyticTotalsResDto;
 import com.example.graph.repository.AnalyticRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,12 @@ public class AnalyticService {
     private final AnalyticRepository analyticRepository;
 
     @Transactional(readOnly = true)
-    public List<AnalyticResDto> findTotalsWithVideos() {
+    public List<AnalyticTotalsResDto> findTotalsWithVideos() {
         return analyticRepository.findTotalsWithVideos();
+    }
+
+    @Transactional(readOnly = true)
+    public List<AnalyticSimpleResDto> findByCollectedAtAndChannel() {
+        return analyticRepository.findByCollectedAtAndChannel();
     }
 }
