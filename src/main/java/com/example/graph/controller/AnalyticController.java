@@ -18,7 +18,7 @@ public class AnalyticController {
 
     private final AnalyticService analyticService;
 
-    @GetMapping
+    @GetMapping("/totals")
     public ResponseEntity<List<AnalyticResDto>> findTotalsWithVideos() {
         List<AnalyticResDto> analytics = analyticService.findTotalsWithVideos();
 
