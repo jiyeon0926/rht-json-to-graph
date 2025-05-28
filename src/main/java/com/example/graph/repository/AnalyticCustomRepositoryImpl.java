@@ -113,13 +113,7 @@ public class AnalyticCustomRepositoryImpl implements AnalyticCustomRepository {
                 .selectFrom(analytic)
                 .orderBy(analytic.collectedAt.asc(), analytic.channelName.asc(), analytic.id.asc())
                 .transform(
-                        GroupBy.groupBy(
-                                        analytic.collectedAt, analytic.channelName, analytic.id,
-                                        analytic.contentId, analytic.videoTitle, analytic.publishTime,
-                                        analytic.videoLength, analytic.validViews, analytic.views,
-                                        analytic.watchTimeHours, analytic.subscribers, analytic.impressions,
-                                        analytic.impressionClickRate
-                                )
+                        GroupBy.groupBy(analytic.collectedAt, analytic.channelName)
                                 .list(Projections.constructor(
                                         AnalyticSimpleResDto.class,
                                         analytic.channelName,
