@@ -1,6 +1,6 @@
 package com.example.graph.controller;
 
-import com.example.graph.dto.AnalyticResDto;
+import com.example.graph.dto.AnalyticTotalsResDto;
 import com.example.graph.service.AnalyticService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,8 +19,8 @@ public class AnalyticController {
     private final AnalyticService analyticService;
 
     @GetMapping("/totals")
-    public ResponseEntity<List<AnalyticResDto>> findTotalsWithVideos() {
-        List<AnalyticResDto> analytics = analyticService.findTotalsWithVideos();
+    public ResponseEntity<List<AnalyticTotalsResDto>> findTotalsWithVideos() {
+        List<AnalyticTotalsResDto> analytics = analyticService.findTotalsWithVideos();
 
         return new ResponseEntity<>(analytics, HttpStatus.OK);
     }

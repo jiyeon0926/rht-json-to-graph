@@ -10,7 +10,7 @@ import java.util.List;
 
 @Getter
 @RequiredArgsConstructor
-public class AnalyticResDto {
+public class AnalyticTotalsResDto {
 
     private final String channelName; // 채널명
     private final LocalDate collectedAt; // 수집일
