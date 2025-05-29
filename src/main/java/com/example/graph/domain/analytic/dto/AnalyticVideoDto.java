@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @RequiredArgsConstructor
-public class AnalyticDto {
+public class AnalyticVideoDto {
 
     private final Long id;
     private final String contentId;
