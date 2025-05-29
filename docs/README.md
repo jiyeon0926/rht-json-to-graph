@@ -2,6 +2,8 @@
 - Java 21
 - Spring Boot 3.5.0 Version
 - JPA
+- JWT
+- Spring Security
 - QueryDSL
 - MySQL
 
