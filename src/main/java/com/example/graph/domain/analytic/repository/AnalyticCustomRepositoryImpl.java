@@ -1,9 +1,9 @@
-package com.example.graph.repository;
+package com.example.graph.domain.analytic.repository;
 
-import com.example.graph.dto.AnalyticDetailDto;
-import com.example.graph.dto.AnalyticDto;
-import com.example.graph.dto.AnalyticSimpleResDto;
-import com.example.graph.dto.AnalyticTotalsResDto;
+import com.example.graph.domain.analytic.dto.AnalyticDetailDto;
+import com.example.graph.domain.analytic.dto.AnalyticDto;
+import com.example.graph.domain.analytic.dto.AnalyticSimpleResDto;
+import com.example.graph.domain.analytic.dto.AnalyticTotalsResDto;
 import com.example.graph.entity.QAnalytic;
 import com.querydsl.core.group.GroupBy;
 import com.querydsl.core.types.Projections;

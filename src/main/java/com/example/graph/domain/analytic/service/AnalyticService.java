@@ -1,8 +1,8 @@
-package com.example.graph.service;
+package com.example.graph.domain.analytic.service;
 
-import com.example.graph.dto.AnalyticSimpleResDto;
-import com.example.graph.dto.AnalyticTotalsResDto;
-import com.example.graph.repository.AnalyticRepository;
+import com.example.graph.domain.analytic.dto.AnalyticSimpleResDto;
+import com.example.graph.domain.analytic.dto.AnalyticTotalsResDto;
+import com.example.graph.domain.analytic.repository.AnalyticRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
