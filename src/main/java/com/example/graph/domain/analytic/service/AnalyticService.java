@@ -1,6 +1,6 @@
 package com.example.graph.domain.analytic.service;
 
-import com.example.graph.domain.analytic.dto.AnalyticSimpleResDto;
+import com.example.graph.domain.analytic.dto.AnalyticResDto;
 import com.example.graph.domain.analytic.dto.AnalyticTotalsResDto;
 import com.example.graph.domain.analytic.repository.AnalyticRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ public class AnalyticService {
     }
 
     @Transactional(readOnly = true)
-    public List<AnalyticSimpleResDto> findByCollectedAtAndChannel() {
+    public List<AnalyticResDto> findByCollectedAtAndChannel() {
         return analyticRepository.findByCollectedAtAndChannel();
     }
 }

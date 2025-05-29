@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @RequiredArgsConstructor
-public class AnalyticDetailDto {
+public class AnalyticVideoDetailDto {
 
     private final Long id; // 고유 식별자
     private final String channelName; // 채널명

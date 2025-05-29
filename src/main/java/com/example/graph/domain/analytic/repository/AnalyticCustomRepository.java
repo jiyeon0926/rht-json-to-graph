@@ -1,8 +1,8 @@
 package com.example.graph.domain.analytic.repository;
 
-import com.example.graph.domain.analytic.dto.AnalyticDetailDto;
-import com.example.graph.domain.analytic.dto.AnalyticSimpleResDto;
+import com.example.graph.domain.analytic.dto.AnalyticResDto;
 import com.example.graph.domain.analytic.dto.AnalyticTotalsResDto;
+import com.example.graph.domain.analytic.dto.AnalyticVideoDetailDto;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -12,9 +12,9 @@ public interface AnalyticCustomRepository {
 
     List<AnalyticTotalsResDto> findTotalsByCollectedAtAndChannel();
 
-    List<AnalyticDetailDto> findDetailsByCollectedAtAndChannel(Set<LocalDate> collectedAtSet, Set<String> channelNameSet);
+    List<AnalyticVideoDetailDto> findDetailsByCollectedAtAndChannel(Set<LocalDate> collectedAtSet, Set<String> channelNameSet);
 
     List<AnalyticTotalsResDto> findTotalsWithVideos();
 
-    List<AnalyticSimpleResDto> findByCollectedAtAndChannel();
+    List<AnalyticResDto> findByCollectedAtAndChannel();
 }

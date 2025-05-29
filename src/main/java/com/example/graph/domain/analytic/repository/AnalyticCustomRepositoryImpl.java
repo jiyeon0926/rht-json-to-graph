@@ -1,9 +1,9 @@
 package com.example.graph.domain.analytic.repository;
 
-import com.example.graph.domain.analytic.dto.AnalyticDetailDto;
-import com.example.graph.domain.analytic.dto.AnalyticDto;
-import com.example.graph.domain.analytic.dto.AnalyticSimpleResDto;
+import com.example.graph.domain.analytic.dto.AnalyticResDto;
 import com.example.graph.domain.analytic.dto.AnalyticTotalsResDto;
+import com.example.graph.domain.analytic.dto.AnalyticVideoDetailDto;
+import com.example.graph.domain.analytic.dto.AnalyticVideoDto;
 import com.example.graph.entity.QAnalytic;
 import com.querydsl.core.group.GroupBy;
 import com.querydsl.core.types.Projections;
@@ -46,12 +46,12 @@ public class AnalyticCustomRepositoryImpl implements AnalyticCustomRepository {
 
     // 수집일과 채널명에 따른 영상 상세 데이터를 조회
     @Override
-    public List<AnalyticDetailDto> findDetailsByCollectedAtAndChannel(Set<LocalDate> colelctedAtSet, Set<String> channelNameSet) {
+    public List<AnalyticVideoDetailDto> findDetailsByCollectedAtAndChannel(Set<LocalDate> colelctedAtSet, Set<String> channelNameSet) {
         QAnalytic analytic = QAnalytic.analytic;
 
         return jpaQueryFactory
                 .select(Projections.constructor(
-                        AnalyticDetailDto.class,
+                        AnalyticVideoDetailDto.class,
                         analytic.id,
                         analytic.channelName,
                         analytic.collectedAt,
@@ -89,10 +89,10 @@ public class AnalyticCustomRepositoryImpl implements AnalyticCustomRepository {
                 .map(AnalyticTotalsResDto::getChannelName)
                 .collect(Collectors.toSet());
 
-        List<AnalyticDetailDto> details = findDetailsByCollectedAtAndChannel(colelctedAtSet, channelNameSet);
+        List<AnalyticVideoDetailDto> details = findDetailsByCollectedAtAndChannel(colelctedAtSet, channelNameSet);
 
         // 수집일과 채널명으로 묶기 위함용
-        Map<String, List<AnalyticDetailDto>> groupedDetails = details.stream()
+        Map<String, List<AnalyticVideoDetailDto>> groupedDetails = details.stream()
                 .collect(Collectors.groupingBy(detail -> detail.getCollectedAt().toString() + "|" + detail.getChannelName()));
 
         // groupedDetails 맵에서 수집일 및 채널명을 키로 사용하여, 해당 상세 데이터를 AnalyticResDto의 videos 필드에 설정
@@ -106,7 +106,7 @@ public class AnalyticCustomRepositoryImpl implements AnalyticCustomRepository {
 
     // 각 채널에 대한 영상 상세 조회
     @Override
-    public List<AnalyticSimpleResDto> findByCollectedAtAndChannel() {
+    public List<AnalyticResDto> findByCollectedAtAndChannel() {
         QAnalytic analytic = QAnalytic.analytic;
 
         return jpaQueryFactory
@@ -115,11 +115,11 @@ public class AnalyticCustomRepositoryImpl implements AnalyticCustomRepository {
                 .transform(
                         GroupBy.groupBy(analytic.collectedAt, analytic.channelName)
                                 .list(Projections.constructor(
-                                        AnalyticSimpleResDto.class,
+                                        AnalyticResDto.class,
                                         analytic.channelName,
                                         analytic.collectedAt,
                                         GroupBy.list(Projections.constructor(
-                                                AnalyticDto.class,
+                                                AnalyticVideoDto.class,
                                                 analytic.id,
                                                 analytic.contentId,
                                                 analytic.videoTitle,

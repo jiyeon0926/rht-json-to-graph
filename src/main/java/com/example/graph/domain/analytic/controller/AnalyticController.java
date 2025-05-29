@@ -1,6 +1,6 @@
 package com.example.graph.domain.analytic.controller;
 
-import com.example.graph.domain.analytic.dto.AnalyticSimpleResDto;
+import com.example.graph.domain.analytic.dto.AnalyticResDto;
 import com.example.graph.domain.analytic.dto.AnalyticTotalsResDto;
 import com.example.graph.domain.analytic.service.AnalyticService;
 import lombok.RequiredArgsConstructor;
@@ -27,8 +27,8 @@ public class AnalyticController {
     }
 
     @GetMapping
-    public ResponseEntity<List<AnalyticSimpleResDto>> findByCollectedAtAndChannel() {
-        List<AnalyticSimpleResDto> analytics = analyticService.findByCollectedAtAndChannel();
+    public ResponseEntity<List<AnalyticResDto>> findByCollectedAtAndChannel() {
+        List<AnalyticResDto> analytics = analyticService.findByCollectedAtAndChannel();
 
         return new ResponseEntity<>(analytics, HttpStatus.OK);
     }

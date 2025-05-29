@@ -8,9 +8,9 @@ import java.util.List;
 
 @Getter
 @RequiredArgsConstructor
-public class AnalyticSimpleResDto {
+public class AnalyticResDto {
 
     private final String channelName;
     private final LocalDate collectedAt;
-    private final List<AnalyticDto> videos;
+    private final List<AnalyticVideoDto> videos;
 }
