@@ -4,13 +4,12 @@ import com.example.graph.domain.analytic.dto.AnalyticResDto;
 import com.example.graph.domain.analytic.dto.AnalyticTotalsResDto;
 import com.example.graph.domain.analytic.dto.AnalyticVideoDetailDto;
 import com.example.graph.domain.analytic.dto.AnalyticVideoDto;
-import com.example.graph.entity.QAnalytic;
+import com.example.graph.domain.analytic.entity.QAnalytic;
 import com.querydsl.core.group.GroupBy;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
@@ -35,8 +34,7 @@ public class AnalyticCustomRepositoryImpl implements AnalyticCustomRepository {
                         analytic.collectedAt,
                         analytic.validViews.sum().intValue(),
                         analytic.views.sum().intValue(),
-                        analytic.subscribers.sum().intValue(),
-                        analytic.watchTimeHours.sum().coalesce(BigDecimal.ZERO)
+                        analytic.subscribers.sum().intValue()
                 ))
                 .from(analytic)
                 .groupBy(analytic.collectedAt, analytic.channelName) // 수집일과 채널명으로 group by
@@ -57,14 +55,14 @@ public class AnalyticCustomRepositoryImpl implements AnalyticCustomRepository {
                         analytic.collectedAt,
                         analytic.contentId,
                         analytic.videoTitle,
-                        analytic.publishTime,
+                        analytic.publishAt,
                         analytic.videoLength,
                         analytic.validViews.intValue(),
                         analytic.views.intValue(),
-                        analytic.watchTimeHours.coalesce(BigDecimal.ZERO),
+                        analytic.watchTimeHours.floatValue(),
                         analytic.subscribers.intValue(),
                         analytic.impressions.intValue(),
-                        analytic.impressionClickRate.coalesce(BigDecimal.ZERO)
+                        analytic.impressionClickRate.floatValue()
                 ))
                 .from(analytic)
                 .where(
@@ -123,14 +121,14 @@ public class AnalyticCustomRepositoryImpl implements AnalyticCustomRepository {
                                                 analytic.id,
                                                 analytic.contentId,
                                                 analytic.videoTitle,
-                                                analytic.publishTime,
+                                                analytic.publishAt,
                                                 analytic.videoLength,
                                                 analytic.validViews.intValue(),
                                                 analytic.views.intValue(),
-                                                analytic.watchTimeHours.coalesce(BigDecimal.ZERO),
+                                                analytic.watchTimeHours.floatValue(),
                                                 analytic.subscribers.intValue(),
                                                 analytic.impressions.intValue(),
-                                                analytic.impressionClickRate.coalesce(BigDecimal.ZERO)
+                                                analytic.impressionClickRate.floatValue()
                                         ))
                                 ))
                 );
