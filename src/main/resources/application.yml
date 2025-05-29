@@ -16,4 +16,5 @@ spring:
         format_sql: true
 
 jwt:
-  secret: ${SECRET}
+  secret: ${JWT_SECRET}
+  expiry-millis: ${JWT_EXPIRY_MILLIS}
