@@ -5,12 +5,13 @@
 - QueryDSL
 - MySQL
 
-## QueryDSL 환경
+### QueryDSL 환경
 - clean → compileJava 순서로 실행해 Q클래스 생성하기
 - Build and run using : Gradle 설정
 - Gradle이 아닌 IntelliJ IDEA일 경우, Q클래스 import 안 되는 이슈 발생
 
 # 💡 기능
+- 토큰 발급 (이메일 요청)
 - 집계 정보 및 영상 상세 정보 조회
 - 채널에 대한 영상 조회
 
