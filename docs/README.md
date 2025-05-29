@@ -16,3 +16,80 @@
 
 # 🧩 설계 및 내용
 각 기능에 대한 조회 API 내용을 [Notion](https://www.notion.so/JSON-API-1ffe22e7e41380ac8b35cdf7e22f74e5)에 정리
+
+# 📁 프로젝트 구조
+<details>
+  <summary>프로젝트 구조</summary>
+  <br>
+  
+```
++---java
+|   \---com
+|       \---example
+|           \---graph
+|               |   GraphApplication.java
+|               |
+|               +---domain
+|               |   +---analytic
+|               |   |   +---controller
+|               |   |   |       AnalyticController.java
+|               |   |   |
+|               |   |   +---dto
+|               |   |   |       AnalyticResDto.java
+|               |   |   |       AnalyticTotalsResDto.java
+|               |   |   |       AnalyticVideoDetailDto.java
+|               |   |   |       AnalyticVideoDto.java
+|               |   |   |
+|               |   |   +---entity
+|               |   |   |       Analytic.java
+|               |   |   |
+|               |   |   +---repository
+|               |   |   |       AnalyticCustomRepository.java
+|               |   |   |       AnalyticCustomRepositoryImpl.java
+|               |   |   |       AnalyticRepository.java
+|               |   |   |
+|               |   |   \---service
+|               |   |           AnalyticService.java
+|               |   |
+|               |   \---user
+|               |       +---controller
+|               |       |       AuthController.java
+|               |       |
+|               |       +---dto
+|               |       |       TokenDto.java
+|               |       |       UserEmailReqDto.java
+|               |       |
+|               |       +---entity
+|               |       |       User.java
+|               |       |
+|               |       +---repository
+|               |       |       UserRepository.java
+|               |       |
+|               |       \---service
+|               |               AuthService.java
+|               |
+|               \---global
+|                   +---auth
+|                   |   |   AuthenticationScheme.java
+|                   |   |   DelegatedAccessDeniedHandler.java
+|                   |   |   DelegatedAuthenticationEntryPoint.java
+|                   |   |
+|                   |   \---jwt
+|                   |           JwtAuthFilter.java
+|                   |           JwtProvider.java
+|                   |
+|                   +---config
+|                   |       QueryDslConfig.java
+|                   |       WebConfig.java
+|                   |
+|                   \---exception
+|                       \---handler
+|                               GlobalExceptionHandler.java
+|
+\---resources
+    |   application.yml
+    |
+    +---static
+    \---templates
+```
+</details>
