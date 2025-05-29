@@ -22,6 +22,38 @@ public class AnalyticCustomRepositoryImpl implements AnalyticCustomRepository {
 
     private final JPAQueryFactory jpaQueryFactory;
 
+    // 각 채널에 대한 영상 상세 조회
+    @Override
+    public List<AnalyticResDto> findByCollectedAtAndChannel() {
+        QAnalytic analytic = QAnalytic.analytic;
+
+        return jpaQueryFactory
+                .selectFrom(analytic)
+                .orderBy(analytic.collectedAt.asc(), analytic.channelName.asc(), analytic.id.asc())
+                .transform(
+                        GroupBy.groupBy(analytic.collectedAt, analytic.channelName)
+                                .list(Projections.constructor(
+                                        AnalyticResDto.class,
+                                        analytic.channelName,
+                                        analytic.collectedAt,
+                                        GroupBy.list(Projections.constructor(
+                                                AnalyticVideoDto.class,
+                                                analytic.id,
+                                                analytic.contentId,
+                                                analytic.videoTitle,
+                                                analytic.publishAt,
+                                                analytic.videoLength,
+                                                analytic.validViews.intValue(),
+                                                analytic.views.intValue(),
+                                                analytic.watchTimeHours.floatValue(),
+                                                analytic.subscribers.intValue(),
+                                                analytic.impressions.intValue(),
+                                                analytic.impressionClickRate.floatValue()
+                                        ))
+                                ))
+                );
+    }
+
     // 수집일과 채널명에 따른 집계 데이터 조회
     @Override
     public List<AnalyticTotalsResDto> findTotalsByCollectedAtAndChannel() {
@@ -100,37 +132,5 @@ public class AnalyticCustomRepositoryImpl implements AnalyticCustomRepository {
         });
 
         return totals;
-    }
-
-    // 각 채널에 대한 영상 상세 조회
-    @Override
-    public List<AnalyticResDto> findByCollectedAtAndChannel() {
-        QAnalytic analytic = QAnalytic.analytic;
-
-        return jpaQueryFactory
-                .selectFrom(analytic)
-                .orderBy(analytic.collectedAt.asc(), analytic.channelName.asc(), analytic.id.asc())
-                .transform(
-                        GroupBy.groupBy(analytic.collectedAt, analytic.channelName)
-                                .list(Projections.constructor(
-                                        AnalyticResDto.class,
-                                        analytic.channelName,
-                                        analytic.collectedAt,
-                                        GroupBy.list(Projections.constructor(
-                                                AnalyticVideoDto.class,
-                                                analytic.id,
-                                                analytic.contentId,
-                                                analytic.videoTitle,
-                                                analytic.publishAt,
-                                                analytic.videoLength,
-                                                analytic.validViews.intValue(),
-                                                analytic.views.intValue(),
-                                                analytic.watchTimeHours.floatValue(),
-                                                analytic.subscribers.intValue(),
-                                                analytic.impressions.intValue(),
-                                                analytic.impressionClickRate.floatValue()
-                                        ))
-                                ))
-                );
     }
 }

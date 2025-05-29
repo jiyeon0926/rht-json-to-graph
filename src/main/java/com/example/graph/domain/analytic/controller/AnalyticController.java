@@ -17,18 +17,18 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AnalyticController {
 
+    @GetMapping
+    public ResponseEntity<List<AnalyticResDto>> findByCollectedAtAndChannel() {
+        List<AnalyticResDto> analytics = analyticService.findByCollectedAtAndChannel();
+
+        return new ResponseEntity<>(analytics, HttpStatus.OK);
+    }
+
     private final AnalyticService analyticService;
 
     @GetMapping("/totals")
     public ResponseEntity<List<AnalyticTotalsResDto>> findTotalsWithVideos() {
         List<AnalyticTotalsResDto> analytics = analyticService.findTotalsWithVideos();
-
-        return new ResponseEntity<>(analytics, HttpStatus.OK);
-    }
-
-    @GetMapping
-    public ResponseEntity<List<AnalyticResDto>> findByCollectedAtAndChannel() {
-        List<AnalyticResDto> analytics = analyticService.findByCollectedAtAndChannel();
 
         return new ResponseEntity<>(analytics, HttpStatus.OK);
     }

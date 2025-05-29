@@ -15,13 +15,15 @@ public class AnalyticService {
 
     private final AnalyticRepository analyticRepository;
 
-    @Transactional(readOnly = true)
-    public List<AnalyticTotalsResDto> findTotalsWithVideos() {
-        return analyticRepository.findTotalsWithVideos();
-    }
-
+    // 각 채널에 대한 영상 상세 조회
     @Transactional(readOnly = true)
     public List<AnalyticResDto> findByCollectedAtAndChannel() {
         return analyticRepository.findByCollectedAtAndChannel();
+    }
+
+    // 집계 정보 및 영상 상세 조회
+    @Transactional(readOnly = true)
+    public List<AnalyticTotalsResDto> findTotalsWithVideos() {
+        return analyticRepository.findTotalsWithVideos();
     }
 }
