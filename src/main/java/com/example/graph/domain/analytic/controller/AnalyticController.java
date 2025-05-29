@@ -1,8 +1,8 @@
-package com.example.graph.controller;
+package com.example.graph.domain.analytic.controller;
 
-import com.example.graph.dto.AnalyticSimpleResDto;
-import com.example.graph.dto.AnalyticTotalsResDto;
-import com.example.graph.service.AnalyticService;
+import com.example.graph.domain.analytic.dto.AnalyticSimpleResDto;
+import com.example.graph.domain.analytic.dto.AnalyticTotalsResDto;
+import com.example.graph.domain.analytic.service.AnalyticService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

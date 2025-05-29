@@ -1,4 +1,4 @@
-package com.example.graph.config;
+package com.example.graph.global.config;
 
 import com.querydsl.jpa.JPQLTemplates;
 import com.querydsl.jpa.impl.JPAQueryFactory;

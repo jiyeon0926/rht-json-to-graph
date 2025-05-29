@@ -1,4 +1,4 @@
-package com.example.graph.dto;
+package com.example.graph.domain.analytic.dto;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

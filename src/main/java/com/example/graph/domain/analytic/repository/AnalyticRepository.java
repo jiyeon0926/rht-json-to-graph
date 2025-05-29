@@ -1,6 +1,6 @@
-package com.example.graph.repository;
+package com.example.graph.domain.analytic.repository;
 
-import com.example.graph.entity.Analytic;
+import com.example.graph.domain.analytic.entity.Analytic;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,8 +1,8 @@
-package com.example.graph.repository;
+package com.example.graph.domain.analytic.repository;
 
-import com.example.graph.dto.AnalyticDetailDto;
-import com.example.graph.dto.AnalyticSimpleResDto;
-import com.example.graph.dto.AnalyticTotalsResDto;
+import com.example.graph.domain.analytic.dto.AnalyticDetailDto;
+import com.example.graph.domain.analytic.dto.AnalyticSimpleResDto;
+import com.example.graph.domain.analytic.dto.AnalyticTotalsResDto;
 
 import java.time.LocalDate;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.example.graph.entity;
+package com.example.graph.domain.analytic.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
