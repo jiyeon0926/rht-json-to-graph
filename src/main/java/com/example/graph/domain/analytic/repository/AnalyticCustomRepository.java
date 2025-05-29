@@ -10,11 +10,11 @@ import java.util.Set;
 
 public interface AnalyticCustomRepository {
 
+    List<AnalyticResDto> findByCollectedAtAndChannel();
+
     List<AnalyticTotalsResDto> findTotalsByCollectedAtAndChannel();
 
     List<AnalyticVideoDetailDto> findDetailsByCollectedAtAndChannel(Set<LocalDate> collectedAtSet, Set<String> channelNameSet);
 
     List<AnalyticTotalsResDto> findTotalsWithVideos();
-
-    List<AnalyticResDto> findByCollectedAtAndChannel();
 }
