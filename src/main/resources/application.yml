@@ -18,3 +18,8 @@ spring:
 jwt:
   secret: ${JWT_SECRET}
   expiry-millis: ${JWT_EXPIRY_MILLIS}
+
+# UserDetailsService 경고 메시지 억제
+logging:
+  level:
+    org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer: ERROR
