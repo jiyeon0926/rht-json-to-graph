@@ -3,6 +3,7 @@ package com.example.graph.domain.user.controller;
 import com.example.graph.domain.user.dto.TokenDto;
 import com.example.graph.domain.user.dto.UserEmailReqDto;
 import com.example.graph.domain.user.service.AuthService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/email")
-    public ResponseEntity<TokenDto> issueTokenByEmail(@RequestBody UserEmailReqDto userEmailReqDto) {
+    public ResponseEntity<TokenDto> issueTokenByEmail(@Valid @RequestBody UserEmailReqDto userEmailReqDto) {
         TokenDto token = authService.issueTokenByEmail(userEmailReqDto.getEmail());
 
         return new ResponseEntity<>(token, HttpStatus.OK);
