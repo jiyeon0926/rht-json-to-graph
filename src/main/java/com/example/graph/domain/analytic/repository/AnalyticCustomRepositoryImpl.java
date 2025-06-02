@@ -10,6 +10,7 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
@@ -41,14 +42,14 @@ public class AnalyticCustomRepositoryImpl implements AnalyticCustomRepository {
                                                 analytic.id,
                                                 analytic.contentId,
                                                 analytic.videoTitle,
-                                                analytic.publishAt,
+                                                analytic.publishTime,
                                                 analytic.videoLength,
                                                 analytic.validViews.intValue(),
                                                 analytic.views.intValue(),
-                                                analytic.watchTimeHours.floatValue(),
+                                                analytic.watchTimeHours.coalesce(BigDecimal.ZERO),
                                                 analytic.subscribers.intValue(),
                                                 analytic.impressions.intValue(),
-                                                analytic.impressionClickRate.floatValue()
+                                                analytic.impressionClickRate.coalesce(BigDecimal.ZERO)
                                         ))
                                 ))
                 );
@@ -87,14 +88,14 @@ public class AnalyticCustomRepositoryImpl implements AnalyticCustomRepository {
                         analytic.collectedAt,
                         analytic.contentId,
                         analytic.videoTitle,
-                        analytic.publishAt,
+                        analytic.publishTime,
                         analytic.videoLength,
                         analytic.validViews.intValue(),
                         analytic.views.intValue(),
-                        analytic.watchTimeHours.floatValue(),
+                        analytic.watchTimeHours.coalesce(BigDecimal.ZERO),
                         analytic.subscribers.intValue(),
                         analytic.impressions.intValue(),
-                        analytic.impressionClickRate.floatValue()
+                        analytic.impressionClickRate.coalesce(BigDecimal.ZERO)
                 ))
                 .from(analytic)
                 .where(
